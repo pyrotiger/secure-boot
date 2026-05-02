@@ -79,7 +79,7 @@ chmod +x setup.sh
 12. **Automation (Optional/Advanced)**:
     To automate resigning of keys after a system update, you can use a pacman hook. While the original post mentioned a `systemd-boot` command, for a standard Garuda **GRUB** installation, you should sign the kernel and the grub binary.
 
-    Example hook provided in [90-sbctl.hook](file:///home/pyro/Development/projects/secure-boot/90-sbctl.hook).
+    Example hook provided in [90-sbctl.hook](90-sbctl.hook).
 
 13. **Reboot**:
     In some cases, you may need to manually re-enable Secure Boot. After booting, verify:
@@ -93,9 +93,9 @@ chmod +x setup.sh
 > is specifically for `systemd-boot`. If you are using GRUB, use the script's logic or the provided `.hook` file.
 
 ## Files in this folder
-- [setup.sh](file:///home/pyro/Development/projects/secure-boot/setup.sh): Interactive setup script.
-- [README.md](file:///home/pyro/Development/projects/secure-boot/README.md): This guide.
-- [90-sbctl.hook](file:///home/pyro/Development/projects/secure-boot/90-sbctl.hook): Example pacman hook for automatic signing.
+- [setup.sh](setup.sh): Interactive setup script.
+- [README.md](README.md): This guide.
+- [90-sbctl.hook](90-sbctl.hook): Example pacman hook for automatic signing.
 
 ## Credits
 - [Unified Extensible Firmware Interface/Secure Boot - ArchWiki](https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot)

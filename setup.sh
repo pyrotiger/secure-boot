@@ -4,7 +4,7 @@
 # Based on the guide for Garuda Linux with GRUB
 # Credits: ArchWiki, Reddit, @stefanwimmer128
 
-set -e
+set -euo pipefail
 
 # Colors for output
 RED='\033[0;31m'
@@ -54,36 +54,26 @@ sbctl status
 
 # 6. Sign unsigned files
 echo -e "\n${BLUE}[6/8] Identifying and signing unsigned files...${NC}"
-# Use the smart verify | sed command from the guide
-# Note: We use a loop for better visibility/handling
-FILES_TO_SIGN=$(sudo sbctl verify | grep "✗" | awk '{print $2}')
+mapfile -t FILES_TO_SIGN < <(sudo sbctl verify | awk '/✗/{print $2}' || true)
 
-if [ -z "$FILES_TO_SIGN" ]; then
+if [ ${#FILES_TO_SIGN[@]} -eq 0 ]; then
     echo -e "${GREEN}No files need signing.${NC}"
 else
-    for file in $FILES_TO_SIGN; do
+    for file in "${FILES_TO_SIGN[@]}"; do
         echo -e "Signing: ${YELLOW}$file${NC}"
-        # Handle potential immutability errors
         if ! sudo sbctl sign -s "$file"; then
             echo -e "${RED}Error signing $file. It might be immutable.${NC}"
-            echo -e "Attempting to remove immutable flag..."
-            # Extract filename from path for chattr
-            FILENAME=$(basename "$file")
-            # This is a bit risky as it assumes the file in /sys is the issue, 
-            # but following the guide's advice:
-            # We'll just print the command for the user to be safe, or try it.
-            # Usually, it's the efivars that are immutable.
-            echo "Run: sudo chattr -i /sys/firmware/efi/efivars/<variable_name>"
+            echo -e "If caused by an immutable efivar, run: sudo chattr -i /sys/firmware/efi/efivars/<variable_name>"
         fi
     done
 fi
 
 # 7. Sign Linux images specifically
 echo -e "\n${BLUE}[7/8] Ensuring all Linux images are signed...${NC}"
-find /boot/vmlinuz-* | while read -r img; do
+while IFS= read -r img; do
     echo -e "Signing kernel image: ${YELLOW}$img${NC}"
     sudo sbctl sign -s "$img"
-done
+done < <(find /boot -maxdepth 1 -name 'vmlinuz-*')
 
 # 8. Final Verification
 echo -e "\n${BLUE}[8/8] Final verification...${NC}"
