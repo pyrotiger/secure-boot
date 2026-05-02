@@ -1,0 +1,18 @@
+# Example Pacman Hook for sbctl
+# Save this to /etc/pacman.d/hooks/90-sbctl.hook (or similar)
+# Note: sbctl often provides its own hooks, but this is for manual signing.
+
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = linux
+Target = linux-lts
+Target = linux-zen
+Target = linux-hardened
+Target = grub
+
+[Action]
+Description = Re-signing EFI binaries for Secure Boot...
+When = PostTransaction
+Exec = /usr/bin/bash -c 'sbctl sign -s /boot/vmlinuz-* && sbctl sign -s /boot/efi/EFI/garuda/grubx64.efi'
