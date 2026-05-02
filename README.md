@@ -101,3 +101,4 @@ chmod +x setup.sh
 - [Unified Extensible Firmware Interface/Secure Boot - ArchWiki](https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot)
 - [Reddit Thread](https://www.reddit.com/r/archlinux/comments/10pq74e/my_easy_method_for_setting_up_secure_boot_with/)
 - @stefanwimmer128 for clarifications
+- [Original Post](https://forum.garudalinux.org/t/secure-boot-guide/40446)
