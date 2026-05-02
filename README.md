@@ -1,6 +1,6 @@
 # Garuda Secure Boot Setup
 
-This guide is based on a community post for Garuda Linux (Arch-based) to make it easier to find and setup Secure Boot. Arch Linux supports Secure Boot but it is disabled by default and installed with shim (generic) certificates.
+This guide is for Garuda Linux (Arch-based) to make it easier to find and setup Secure Boot. Arch Linux supports Secure Boot but it is disabled by default and installed with shim (generic) certificates.
 
 > [!IMPORTANT]
 > This is for a standard Garuda installation with **GRUB**.
