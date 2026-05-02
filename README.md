@@ -11,6 +11,17 @@ To dual boot with Secure Boot enabled, follow these instructions to install Micr
 
 1. **UEFI Setup**: Enter UEFI and place your Secure Boot to **setup mode**. This is commonly done by clearing the installed keys in your system.
 
+## Automation Script
+
+Alternatively, you can use the included `setup.sh` script to automate steps 2 through 11.
+
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+## Manual Instructions
+
 2. **Replace shim with Microsoft’s CA certificates**:
    ```bash
    sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=garuda --modules="tpm" --disable-shim-lock
